@@ -12,7 +12,7 @@ extern "C" {
 
                 // GENERAL STUFF
 
-double get_delta_time(current_time);
+double get_delta_time(double current_time);
 
 typedef enum {
         RELEASE = GLFW_RELEASE,

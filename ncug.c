@@ -3,9 +3,8 @@
 #include "../stb_image.h"
 
 struct mouse global_mouse;
-double global_delta_time;
 
-double get_delta_time(current_time)
+double get_delta_time(double current_time)
 {
         static double last_frame;
 
