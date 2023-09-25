@@ -5,14 +5,14 @@
 struct mouse global_mouse;
 double global_delta_time;
 
-void get_delta_time()
+double get_delta_time(current_time)
 {
-        double current_frame = glfwGetTime();
         static double last_frame;
 
-        global_delta_time = last_frame - current_frame;
+        double delta_time = last_frame - current_time;
+        last_frame = current_time;
 
-        last_frame = current_frame;
+        return delta_time;
 }
 
 // ------- KEYBOARD SECTION
