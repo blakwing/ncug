@@ -3,8 +3,9 @@
 #include "../stb_image.h"
 
 struct mouse global_mouse;
+struct keyboard keys = {0};
 
-double get_delta_time(double current_time)
+double ncug_delta_time(double current_time)
 {
         static double last_frame;
 
@@ -15,23 +16,31 @@ double get_delta_time(double current_time)
 }
 
 // ------- KEYBOARD SECTION
-bool key_held(GLFWwindow *pWindow, int key_code)
+
+
+void key_callback(GLFWwindow *pWindow, int key, int scancode, int action, int mods)
 {
-	switch( glfwGetKey(pWindow, key_code) )
-	{
-		case GLFW_PRESS:
-			return true;
-			break;
+        switch (action) {
+                case GLFW_PRESS:
+                        keys.keys[key] = GLFW_PRESS;
+                        break;
 
-		case GLFW_RELEASE:
-			return false;
-			break;
+                case GLFW_RELEASE:
+                        keys.keys[key] = GLFW_RELEASE;
+                        break;
 
-		default:
-			return false;
-			break;
-	}
+                default:
+                        break;
+        }
 }
+
+struct keyboard *ncug_keyboard_create(GLFWwindow *pWindow)
+{
+        glfwSetKeyCallback(pWindow, key_callback);
+        return &keys;
+}
+
+
 // ------- KEYBOARD SECTION
 
 
@@ -83,7 +92,7 @@ void mouse_button_callback(GLFWwindow *pWindow, int button, int state, int mods)
         }
 }
 
-struct mouse *mouse_create(GLFWwindow *pWindow, struct mouse_config config)
+struct mouse *ncug_mouse_create(GLFWwindow *pWindow, struct mouse_config config)
 {
         if (glfwRawMouseMotionSupported() && config.raw_input) {
                 glfwSetInputMode(pWindow, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
@@ -101,7 +110,7 @@ struct mouse *mouse_create(GLFWwindow *pWindow, struct mouse_config config)
         return &global_mouse;
 }
 
-GLFWcursor* cursor_create(char *pPath, int channels)
+GLFWcursor* ncug_cursor_create(char pPath[static 1], int channels)
 {
         int comp; // useless for now ig?
         GLFWimage cursor_image;

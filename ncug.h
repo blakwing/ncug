@@ -12,7 +12,7 @@ extern "C" {
 
                 // GENERAL STUFF
 
-double get_delta_time(double current_time);
+double ncug_delta_time(double current_time);
 
 typedef enum {
         RELEASE = GLFW_RELEASE,
@@ -33,9 +33,11 @@ struct mouse_config {
         int input_mode;
 };
 
-GLFWcursor* cursor_create(char *pPath, int channels);
+GLFWcursor* ncug_cursor_create(char pPath[static 1], int channels);
 
-
+struct keyboard {
+        int keys[GLFW_KEY_LAST];
+};
 
 struct mouse {
         double xpos;
@@ -55,14 +57,14 @@ struct mouse {
         key button4;
 };
 
-struct mouse *mouse_create(GLFWwindow *pWindow, struct mouse_config config);
+struct mouse *ncug_mouse_create(GLFWwindow *pWindow, struct mouse_config config);
                         // MOUSE SECTION
 
 
                         // KEYBOARD SECTION
 
-bool key_held(GLFWwindow *pWindow, int key_code);
 
+struct keyboard *ncug_keyboard_create(GLFWwindow *pWindow);
                         // KEYBOARD SECTION
 
 #ifdef __cplusplus__
